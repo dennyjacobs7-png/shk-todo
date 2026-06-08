@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="theme-color" content="#1a1a1a">
+<title>SHK Todo – Heesch</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #141414;
+    --surface: #1e1e1e;
+    --surface2: #272727;
+    --border: #333;
+    --red: #CC0000;
+    --red-dim: #7a1f1f;
+    --green: #2d6a30;
+    --green-bright: #4caf50;
+    --text: #f0ede8;
+    --muted: #888;
+    --done: #555;
+    --font: 'DM Sans', sans-serif;
+    --mono: 'DM Mono', monospace;
+  }
+
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .app {
+    max-width: 520px;
+    margin: 0 auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 0 0 80px;
+  }
+
+  /* Header */
+  .header {
+    padding: 24px 20px 16px;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    z-index: 10;
+  }
+
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 4px;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .logo-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--red);
+  }
+
+  .logo-text {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .sync-indicator {
+    font-size: 11px;
+    font-family: var(--mono);
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .sync-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--muted);
+    transition: background 0.3s;
+  }
+
+  .sync-dot.live { background: var(--green-bright); animation: pulse 2s infinite; }
+  .sync-dot.saving { background: #f0a500; animation: pulse 0.5s infinite; }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  h1 {
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
+
+  .subtitle {
+    font-size: 12px;
+    color: var(--muted);
+    font-family: var(--mono);
+    margin-top: 2px;
+  }
+
+  /* Input */
+  .input-area {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .input-row {
+    display: flex;
+    gap: 8px;
+    align-items: stretch;
+  }
+
+  .task-input {
+    flex: 1;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 15px;
+    font-family: var(--font);
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .task-input:focus { border-color: var(--red); }
+  .task-input::placeholder { color: var(--muted); }
+
+  .add-btn {
+    background: var(--red);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    width: 46px;
+    font-size: 22px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, transform 0.1s;
+    flex-shrink: 0;
+  }
+
+  .add-btn:hover { background: #a50000; }
+  .add-btn:active { transform: scale(0.95); }
+
+  /* Filter Tabs */
+  .filter-tabs {
+    display: flex;
+    padding: 12px 20px;
+    gap: 6px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .tab {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid transparent;
+    color: var(--muted);
+    background: transparent;
+    transition: all 0.2s;
+    font-family: var(--font);
+  }
+
+  .tab.active {
+    background: var(--surface2);
+    border-color: var(--border);
+    color: var(--text);
+  }
+
+  .tab-count {
+    display: inline-block;
+    background: var(--red);
+    color: white;
+    border-radius: 10px;
+    padding: 1px 6px;
+    font-size: 10px;
+    margin-left: 4px;
+    font-family: var(--mono);
+  }
+
+  /* Task List */
+  .tasks {
+    flex: 1;
+    padding: 8px 20px;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--muted);
+  }
+
+  .empty-icon { font-size: 40px; margin-bottom: 12px; }
+  .empty-text { font-size: 14px; }
+
+  .task-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    animation: slideIn 0.2s ease;
+    position: relative;
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .task-item.done .task-text {
+    text-decoration: line-through;
+    color: var(--done);
+  }
+
+  .check-btn {
+    width: 22px; height: 22px;
+    border-radius: 6px;
+    border: 2px solid var(--border);
+    background: transparent;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    margin-top: 1px;
+  }
+
+  .check-btn:hover { border-color: var(--green-bright); }
+
+  .task-item.done .check-btn {
+    background: var(--green);
+    border-color: var(--green);
+  }
+
+  .check-icon {
+    color: white;
+    font-size: 13px;
+    display: none;
+  }
+
+  .task-item.done .check-icon { display: block; }
+
+  .task-content { flex: 1; min-width: 0; }
+
+  .task-text {
+    font-size: 15px;
+    line-height: 1.4;
+    word-break: break-word;
+    transition: color 0.2s;
+  }
+
+  .task-meta {
+    font-size: 11px;
+    color: var(--muted);
+    font-family: var(--mono);
+    margin-top: 3px;
+  }
+
+  .delete-btn {
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    opacity: 0;
+    transition: opacity 0.2s, color 0.2s;
+    font-size: 16px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .task-item:hover .delete-btn { opacity: 1; }
+  .delete-btn:hover { color: var(--red); }
+
+  /* Mobile: immer sichtbar */
+  @media (max-width: 600px) {
+    .delete-btn { opacity: 0.4; }
+  }
+
+  /* Loading */
+  .loading {
+    text-align: center;
+    padding: 40px;
+    color: var(--muted);
+    font-size: 13px;
+    font-family: var(--mono);
+  }
+
+  /* Footer */
+  .footer {
+    position: fixed;
+    bottom: 0;
+    left: 0; right: 0;
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 12px 20px;
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-count {
+    font-size: 12px;
+    color: var(--muted);
+    font-family: var(--mono);
+  }
+
+  .clear-done-btn {
+    font-size: 12px;
+    color: var(--muted);
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-family: var(--font);
+    transition: all 0.2s;
+  }
+
+  .clear-done-btn:hover { color: var(--red); border-color: var(--red); }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="header">
+    <div class="header-top">
+      <div class="logo">
+        <div class="logo-dot"></div>
+        <span class="logo-text">Heesch SHK</span>
+      </div>
+      <div class="sync-indicator">
+        <div class="sync-dot" id="syncDot"></div>
+        <span id="syncText">Verbinde...</span>
+      </div>
+    </div>
+    <h1>Aufgaben</h1>
+    <div class="subtitle" id="dateStr"></div>
+  </div>
+
+  <div class="input-area">
+    <div class="input-row">
+      <input
+        type="text"
+        class="task-input"
+        id="taskInput"
+        placeholder="Neue Aufgabe eingeben..."
+        maxlength="200"
+        autocomplete="off"
+      >
+      <button class="add-btn" id="addBtn" title="Hinzufügen">+</button>
+    </div>
+  </div>
+
+  <div class="filter-tabs">
+    <button class="tab active" data-filter="offen">Offen <span class="tab-count" id="countOffen">0</span></button>
+    <button class="tab" data-filter="alle">Alle</button>
+    <button class="tab" data-filter="erledigt">Erledigt</button>
+  </div>
+
+  <div class="tasks" id="taskList">
+    <div class="loading">Lade Aufgaben...</div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <span class="footer-count" id="footerCount"></span>
+  <button class="clear-done-btn" id="clearDoneBtn">Erledigte löschen</button>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, addDoc, onSnapshot, updateDoc, deleteDoc, doc, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyByjMOVQ12Grua48QwGGvvnB4lze-isyv0",
+  authDomain: "shk-todo-da35b.firebaseapp.com",
+  projectId: "shk-todo-da35b",
+  storageBucket: "shk-todo-da35b.firebasestorage.app",
+  messagingSenderId: "978821411452",
+  appId: "1:978821411452:web:3a295d420ad277130d4ff9"
+};
+
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
+
+// Datum
+const now = new Date();
+document.getElementById('dateStr').textContent =
+  now.toLocaleDateString('de-DE', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+
+// State
+let tasks = [];
+let filter = 'offen';
+
+// Sync Indicator
+function setSyncStatus(status) {
+  const dot  = document.getElementById('syncDot');
+  const text = document.getElementById('syncText');
+  dot.className = 'sync-dot ' + status;
+  if (status === 'live')   text.textContent = 'Live';
+  if (status === 'saving') text.textContent = 'Speichert...';
+  if (status === '')       text.textContent = 'Offline';
+}
+
+// Render
+function render() {
+  const list = document.getElementById('taskList');
+  const offene    = tasks.filter(t => !t.done);
+  const erledigte = tasks.filter(t => t.done);
+
+  document.getElementById('countOffen').textContent = offene.length;
+  document.getElementById('footerCount').textContent =
+    `${offene.length} offen · ${erledigte.length} erledigt`;
+
+  let visible = tasks;
+  if (filter === 'offen')    visible = offene;
+  if (filter === 'erledigt') visible = erledigte;
+
+  if (visible.length === 0) {
+    list.innerHTML = `<div class="empty-state">
+      <div class="empty-icon">${filter === 'erledigt' ? '✅' : '📋'}</div>
+      <div class="empty-text">${filter === 'erledigt' ? 'Noch nichts erledigt' : 'Keine offenen Aufgaben!'}</div>
+    </div>`;
+    return;
+  }
+
+  list.innerHTML = visible.map(t => `
+    <div class="task-item ${t.done ? 'done' : ''}" data-id="${t.id}">
+      <button class="check-btn" onclick="toggleDone('${t.id}', ${t.done})">
+        <span class="check-icon">✓</span>
+      </button>
+      <div class="task-content">
+        <div class="task-text">${escapeHtml(t.text)}</div>
+        <div class="task-meta">${formatDate(t.createdAt)}</div>
+      </div>
+      <button class="delete-btn" onclick="deleteTask('${t.id}')" title="Löschen">✕</button>
+    </div>
+  `).join('');
+}
+
+function escapeHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function formatDate(ts) {
+  if (!ts) return '';
+  const d = ts.toDate ? ts.toDate() : new Date(ts);
+  return d.toLocaleDateString('de-DE', { day:'2-digit', month:'2-digit' }) + ' ' +
+         d.toLocaleTimeString('de-DE', { hour:'2-digit', minute:'2-digit' });
+}
+
+// Firestore listener
+const q = query(collection(db, 'todos'), orderBy('createdAt', 'desc'));
+onSnapshot(q, (snap) => {
+  tasks = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  setSyncStatus('live');
+  render();
+}, (err) => {
+  console.error(err);
+  setSyncStatus('');
+});
+
+// Aufgabe hinzufügen
+async function addTask() {
+  const input = document.getElementById('taskInput');
+  const text  = input.value.trim();
+  if (!text) return;
+  input.value = '';
+  setSyncStatus('saving');
+  await addDoc(collection(db, 'todos'), {
+    text,
+    done: false,
+    createdAt: serverTimestamp()
+  });
+}
+
+// Toggle erledigt
+window.toggleDone = async (id, current) => {
+  setSyncStatus('saving');
+  await updateDoc(doc(db, 'todos', id), { done: !current });
+};
+
+// Löschen
+window.deleteTask = async (id) => {
+  setSyncStatus('saving');
+  await deleteDoc(doc(db, 'todos', id));
+};
+
+// Erledigte alle löschen
+document.getElementById('clearDoneBtn').onclick = async () => {
+  const done = tasks.filter(t => t.done);
+  if (done.length === 0) return;
+  if (!confirm(`${done.length} erledigte Aufgaben löschen?`)) return;
+  setSyncStatus('saving');
+  for (const t of done) await deleteDoc(doc(db, 'todos', t.id));
+};
+
+// Filter
+document.querySelectorAll('.tab').forEach(btn => {
+  btn.onclick = () => {
+    filter = btn.dataset.filter;
+    document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    render();
+  };
+});
+
+// Add Button + Enter
+document.getElementById('addBtn').onclick = addTask;
+document.getElementById('taskInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') addTask();
+});
+</script>
+</body>
+</html>
