@@ -231,10 +231,6 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--s
           </div>
           <div class="form-row">
             <div class="fg">
-              <label>Symbol</label>
-              <div class="emoji-preview" id="emojiPreview">⚙️</div>
-            </div>
-            <div class="fg">
               <label>Zugeordnet zu</label>
               <select id="addAuto">
                 <option value="lager">🏭 Lager</option>
@@ -473,8 +469,7 @@ window.renderAlle=()=>{
  
 // ADMIN ARTIKEL
 window.artGewaehlt=(art)=>{
-  const emoji=ART_EMOJI[art]||'🔧';
-  const p=document.getElementById('emojiPreview'); if(p)p.textContent=emoji;
+  // Emoji wird automatisch gesetzt beim Speichern
 };
  
 window.artikelHinzu=async()=>{
@@ -557,7 +552,7 @@ window.renderAdminAutos=()=>{
 };
 function updateAutoSelects(){
   const opts='<option value="lager">🏭 Lager</option>'+autos.map(a=>`<option value="${a.kfz}">${a.kfz}${a.desc?' – '+a.desc:''}</option>`).join('');
-  const s=document.getElementById('addAuto'); if(s)s.innerHTML=opts;
+  document.querySelectorAll('#addAuto').forEach(s=>{ if(s)s.innerHTML=opts; });
 }
  
 // ADMIN ÜBERSICHT
