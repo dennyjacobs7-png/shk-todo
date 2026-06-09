@@ -509,6 +509,13 @@ window.wzHinzu = async () => {
   document.getElementById('addEmoji').value='';
 };
 
+window.wzLoeschenBtn = (btn) => {
+  const id   = btn.getAttribute('data-id');
+  const item = btn.closest('.admin-wz-item');
+  const name = item.querySelector('.admin-wz-name').textContent;
+  window.wzLoeschen(id, name);
+};
+
 window.wzLoeschen = async (id, name) => {
   showModal(`"${name}" löschen?`, 'Das Werkzeug wird dauerhaft entfernt.', async () => {
     await deleteDoc(doc(db, 'werkzeuge', id));
