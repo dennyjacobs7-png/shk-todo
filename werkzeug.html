@@ -53,56 +53,71 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--s
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
 .user-tag{font-size:12px;color:var(--muted);font-family:var(--mono);padding:4px 10px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;}
  
-/* NAV TABS */
-.nav-tabs{display:flex;border-bottom:1px solid var(--border);background:var(--surface);overflow-x:auto;}
-.nav-tab{flex:1;min-width:80px;padding:12px 8px;font-size:13px;font-weight:600;text-align:center;cursor:pointer;border:none;background:transparent;color:var(--muted);font-family:var(--sans);border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;}
-.nav-tab.active{color:var(--text);border-bottom-color:var(--red);}
+/* FILTER BAR */
+.filter-bar{padding:10px 16px;border-bottom:1px solid var(--border);background:var(--surface);display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
+.f-tab{padding:5px 12px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid transparent;color:var(--muted);background:transparent;transition:all .2s;font-family:var(--sans);}
+.f-tab.active{background:var(--surface2);border-color:var(--border);color:var(--text);}
+.f-count{display:inline-block;background:var(--red);color:#fff;border-radius:10px;padding:1px 6px;font-size:10px;margin-left:3px;font-family:var(--mono);}
+.search-inp-bar{margin-left:auto;background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:12px;color:var(--text);outline:none;font-family:var(--sans);width:160px;}
+.search-inp-bar:focus{border-color:var(--red);}
+.search-inp-bar::placeholder{color:var(--muted);}
+ 
+/* MAIN LAYOUT */
+.main-layout{display:grid;grid-template-columns:1fr 1fr;flex:1;overflow:hidden;}
+@media(max-width:680px){.main-layout{grid-template-columns:1fr;}}
+.panel{display:flex;flex-direction:column;border-right:1px solid var(--border);height:calc(100vh - 113px);overflow:hidden;}
+.panel:last-child{border-right:none;}
+.panel-header{padding:12px 16px;border-bottom:1px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.panel-title{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-family:var(--mono);display:flex;align-items:center;gap:8px;}
+.panel-count{background:var(--surface2);border-radius:10px;padding:2px 8px;font-size:10px;color:var(--muted);}
+.panel-body{flex:1;overflow-y:auto;padding:12px;}
+.kat-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-family:var(--mono);padding:8px 4px 4px;}
  
 /* STATUS BADGES */
-.badge{font-size:10px;padding:2px 8px;border-radius:4px;font-family:var(--mono);white-space:nowrap;font-weight:600;}
+.badge{font-size:10px;padding:2px 8px;border-radius:4px;font-family:var(--mono);white-space:nowrap;font-weight:600;letter-spacing:.03em;}
 .badge-auto{background:#0d1f0e;color:var(--green2);border:1px solid var(--green);}
-.badge-frei{background:#1a2a1a;color:#7bc87f;border:1px solid #2a5a2e;}
+.badge-frei{background:#1a2a3a;color:var(--blue2);border:1px solid var(--blue);}
 .badge-wartung{background:#2a1f00;color:var(--orange2);border:1px solid var(--orange);}
 .badge-defekt{background:#3a1010;color:#ff8080;border:1px solid #5a1a1a;}
  
-/* ALLE WERKZEUGE TAB */
-.filter-bar{padding:10px 16px;border-bottom:1px solid var(--border);display:flex;gap:6px;flex-wrap:wrap;align-items:center;background:var(--surface2);}
-.filter-btn{padding:5px 12px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid transparent;color:var(--muted);background:transparent;transition:all .2s;font-family:var(--sans);}
-.filter-btn.active{background:var(--surface);border-color:var(--border);color:var(--text);}
-.search-inp{margin-left:auto;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:5px 12px;font-size:12px;color:var(--text);outline:none;font-family:var(--sans);width:150px;}
-.search-inp:focus{border-color:var(--red);}
-.search-inp::placeholder{color:var(--muted);}
+/* ITEM CARDS */
+.item-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:6px;display:flex;align-items:center;gap:10px;transition:all .15s;}
+.item-card.clickable{cursor:pointer;}
+.item-card.clickable:hover{border-color:#3a3a3a;background:var(--surface2);}
+.item-icon{width:38px;height:38px;border-radius:8px;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.item-info{flex:1;min-width:0;}
+.item-name{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.item-meta{font-size:11px;color:var(--muted);font-family:var(--mono);margin-top:2px;}
+.item-action{background:var(--red);color:#fff;border:none;border-radius:6px;padding:5px 10px;font-size:11px;font-weight:600;cursor:pointer;flex-shrink:0;font-family:var(--sans);white-space:nowrap;transition:background .15s;}
+.item-action:hover{background:var(--red2);}
+.item-action.gruen{background:var(--green);}
+.item-action.gruen:hover{background:#1e5522;}
  
-.wz-liste{padding:12px 16px;flex:1;overflow-y:auto;}
-.wz-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:13px 14px;margin-bottom:7px;display:flex;align-items:center;gap:10px;transition:all .15s;}
-.wz-icon{width:38px;height:38px;border-radius:8px;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
-.wz-info{flex:1;min-width:0;}
-.wz-name{font-size:14px;font-weight:600;}
-.wz-meta{font-size:11px;color:var(--muted);font-family:var(--mono);margin-top:2px;}
-.wz-auto{font-size:11px;font-family:var(--mono);margin-top:3px;color:var(--muted);}
-.wz-auto span{color:var(--text);}
+/* KFZ GROUPS */
+.kfz-section{margin-bottom:16px;}
+.kfz-header{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;background:var(--surface);border:1px solid var(--border);margin-bottom:6px;}
+.kfz-plate{font-family:var(--mono);font-size:13px;font-weight:500;background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:3px 10px;color:var(--text);letter-spacing:.06em;}
+.kfz-monteur{font-size:13px;font-weight:600;flex:1;}
+.kfz-item{display:flex;align-items:center;gap:8px;padding:9px 12px;border-radius:8px;margin-bottom:4px;}
+.kfz-item.w-item{background:#0d1f0e;border:1px solid var(--green);}
+.kfz-item.m-item{background:#0d1525;border:1px solid var(--blue);}
+.kfz-item-name{font-size:13px;flex:1;}
+.kfz-item-meta{font-size:11px;color:var(--muted);font-family:var(--mono);}
+.btn-zurueck{background:transparent;border:1px solid #3a1010;color:#cc4444;border-radius:5px;padding:3px 8px;font-size:11px;cursor:pointer;font-family:var(--sans);transition:all .15s;white-space:nowrap;}
+.btn-zurueck:hover{background:#3a1010;}
+.empty-panel{text-align:center;padding:50px 20px;color:var(--muted);font-size:13px;}
+.empty-panel .ei{font-size:36px;margin-bottom:10px;}
  
-/* ÜBERSICHT TAB */
-.uebersicht-body{padding:16px;flex:1;overflow-y:auto;}
-.auto-reiter-wrap{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
-.auto-reiter{padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--border);color:var(--muted);background:var(--surface2);transition:all .2s;font-family:var(--sans);}
-.auto-reiter.active{background:var(--red);border-color:var(--red);color:#fff;}
-.auto-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
-.auto-card-header{padding:14px 16px;background:var(--surface2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;}
-.auto-plate{font-family:var(--mono);font-size:14px;font-weight:600;background:var(--surface);border:1px solid var(--border);border-radius:5px;padding:4px 12px;}
-.auto-desc{font-size:13px;color:var(--muted);flex:1;}
-.auto-count{font-size:11px;font-family:var(--mono);color:var(--muted);}
-.auto-wz-item{display:flex;align-items:center;gap:10px;padding:11px 16px;border-bottom:1px solid var(--border);}
-.auto-wz-item:last-child{border-bottom:none;}
-.auto-wz-icon{font-size:18px;width:28px;text-align:center;}
-.auto-wz-info{flex:1;}
-.auto-wz-name{font-size:13px;font-weight:600;}
-.auto-wz-meta{font-size:11px;color:var(--muted);font-family:var(--mono);}
-.auto-empty{padding:20px 16px;text-align:center;color:var(--muted);font-size:13px;}
+/* EMOJI PICKER */
+.emoji-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:4px;margin-top:8px;}
+.emoji-opt{font-size:22px;padding:6px;border-radius:6px;cursor:pointer;text-align:center;border:2px solid transparent;transition:all .15s;background:var(--surface2);}
+.emoji-opt:hover{border-color:var(--red);}
+.emoji-opt.selected{border-color:var(--red);background:#2a0a0a;}
+.selected-emoji-preview{font-size:28px;text-align:center;padding:8px;background:var(--surface2);border-radius:8px;border:1px solid var(--border);}
  
 /* ADMIN */
 #adminScreen{background:var(--bg);}
-.admin-body{padding:20px;max-width:700px;margin:0 auto;}
+.admin-body{padding:20px;max-width:720px;margin:0 auto;}
 .admin-section{margin-bottom:28px;}
 .admin-section-title{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-family:var(--mono);margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid var(--border);}
 .add-form{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px;}
@@ -111,25 +126,16 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--s
 .btn-add{background:var(--green);color:#fff;border:none;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:600;font-family:var(--sans);cursor:pointer;transition:background .2s;}
 .btn-add:hover{background:#1e5522;}
 .admin-item{display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:8px;border:1px solid var(--border);background:var(--surface);margin-bottom:6px;flex-wrap:wrap;}
-.item-info{flex:1;min-width:120px;}
-.item-name{font-size:13px;font-weight:600;}
-.item-meta{font-size:11px;color:var(--muted);font-family:var(--mono);margin-top:2px;}
-.btn-del{background:transparent;border:1px solid #3a1010;color:#cc4444;border-radius:6px;padding:5px 10px;font-size:12px;cursor:pointer;font-family:var(--sans);transition:all .2s;white-space:nowrap;}
+.admin-item-info{flex:1;min-width:150px;}
+.admin-item-name{font-size:13px;font-weight:600;}
+.admin-item-meta{font-size:11px;color:var(--muted);font-family:var(--mono);margin-top:2px;}
+.btn-del{background:transparent;border:1px solid #3a1010;color:#cc4444;border-radius:6px;padding:5px 10px;font-size:12px;cursor:pointer;font-family:var(--sans);transition:all .2s;}
 .btn-del:hover{background:#3a1010;}
-.status-sel{background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:5px 8px;font-size:12px;color:var(--text);font-family:var(--mono);cursor:pointer;outline:none;}
-.status-sel option{background:var(--surface2);}
-.admin-tabs{display:flex;gap:4px;padding:12px 20px;border-bottom:1px solid var(--border);overflow-x:auto;}
-.admin-tab{padding:7px 16px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;border:1px solid transparent;color:var(--muted);background:transparent;transition:all .2s;font-family:var(--sans);white-space:nowrap;}
+.admin-tabs{display:flex;gap:4px;padding:12px 20px;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+.admin-tab{padding:7px 14px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;border:1px solid transparent;color:var(--muted);background:transparent;transition:all .2s;font-family:var(--sans);}
 .admin-tab.active{background:var(--surface2);border-color:var(--border);color:var(--text);}
- 
-/* EMOJI PICKER */
-.emoji-grid{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;}
-.emoji-btn{width:36px;height:36px;border-radius:6px;border:1px solid var(--border);background:var(--surface2);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;}
-.emoji-btn:hover,.emoji-btn.selected{border-color:var(--red);background:var(--surface);}
-.emoji-selected-display{font-size:24px;width:44px;height:44px;border-radius:8px;border:1px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;cursor:pointer;}
- 
-.empty-state{text-align:center;padding:50px 20px;color:var(--muted);font-size:13px;}
-.empty-state .ei{font-size:36px;margin-bottom:10px;}
+.status-select{background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:4px 8px;font-size:12px;color:var(--text);font-family:var(--mono);cursor:pointer;outline:none;}
+.status-select option{background:var(--surface2);}
 </style>
 </head>
 <body>
@@ -168,28 +174,31 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--s
       <button class="btn-sm" onclick="abmelden()">Abmelden</button>
     </div>
   </div>
-  <div class="nav-tabs">
-    <button class="nav-tab active" onclick="mainTab(this,'tAlle')">🔧 Alle Werkzeuge</button>
-    <button class="nav-tab" onclick="mainTab(this,'tUebersicht')">🚐 Fahrzeuge</button>
+ 
+  <div class="filter-bar">
+    <button class="f-tab active" data-f="alle" onclick="setFilter(this)">Alle <span class="f-count" id="cAlle">0</span></button>
+    <button class="f-tab" data-f="frei" onclick="setFilter(this)">Frei</button>
+    <button class="f-tab" data-f="auto" onclick="setFilter(this)">Im Auto</button>
+    <button class="f-tab" data-f="wartung" onclick="setFilter(this)">Wartung</button>
+    <button class="f-tab" data-f="defekt" onclick="setFilter(this)">Defekt</button>
+    <input type="text" class="search-inp-bar" id="searchMain" placeholder="Suchen..." oninput="renderMain()">
   </div>
  
-  <!-- ALLE WERKZEUGE -->
-  <div id="tAlle" style="display:flex;flex-direction:column;flex:1;overflow:hidden;">
-    <div class="filter-bar">
-      <button class="filter-btn active" data-f="alle" onclick="setFilter(this)">Alle</button>
-      <button class="filter-btn" data-f="auto" onclick="setFilter(this)">Im Auto</button>
-      <button class="filter-btn" data-f="frei" onclick="setFilter(this)">Frei</button>
-      <button class="filter-btn" data-f="wartung" onclick="setFilter(this)">Wartung</button>
-      <button class="filter-btn" data-f="defekt" onclick="setFilter(this)">Defekt</button>
-      <input type="text" class="search-inp" id="searchWz" placeholder="Suchen..." oninput="renderAlle()">
+  <div class="main-layout">
+    <!-- LINKES PANEL: ÜBERSICHT -->
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">📦 Übersicht <span class="panel-count" id="panelCount">0</span></span>
+      </div>
+      <div class="panel-body" id="mainPanel"><div class="empty-panel"><div class="ei">⏳</div>Lade...</div></div>
     </div>
-    <div class="wz-liste" id="wzListe"><div class="empty-state"><div class="ei">⏳</div>Lade...</div></div>
-  </div>
  
-  <!-- FAHRZEUG ÜBERSICHT -->
-  <div id="tUebersicht" style="display:none;flex-direction:column;flex:1;overflow:hidden;">
-    <div class="uebersicht-body" id="uebersichtBody">
-      <div class="empty-state"><div class="ei">⏳</div>Lade...</div>
+    <!-- RECHTES PANEL: KFZ -->
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">🚐 Im Fahrzeug <span class="panel-count" id="kfzCount">0</span></span>
+      </div>
+      <div class="panel-body" id="kfzPanel"><div class="empty-panel"><div class="ei">⏳</div>Lade...</div></div>
     </div>
   </div>
 </div>
@@ -197,46 +206,58 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--s
 <!-- ADMIN -->
 <div id="adminScreen" class="screen">
   <div class="topbar">
-    <div class="topbar-left"><div class="topbar-dot"></div><span class="topbar-title">Admin</span></div>
+    <div class="topbar-left"><div class="topbar-dot"></div><span class="topbar-title">Admin – Verwaltung</span></div>
     <div class="topbar-right">
       <span id="syncDotAdmin" class="sync-dot"></span>
       <button class="btn-sm" onclick="adminAbmelden()">Abmelden</button>
     </div>
   </div>
   <div class="admin-tabs">
-    <button class="admin-tab active" onclick="adminTab(this,'aw')">Werkzeuge</button>
-    <button class="admin-tab" onclick="adminTab(this,'aa')">Autos</button>
-    <button class="admin-tab" onclick="adminTab(this,'ao')">Übersicht</button>
+    <button class="admin-tab active" onclick="adminTab(this,'ti')">Artikel</button>
+    <button class="admin-tab" onclick="adminTab(this,'ta')">Autos</button>
+    <button class="admin-tab" onclick="adminTab(this,'to')">Übersicht</button>
   </div>
   <div class="admin-body">
  
-    <!-- WERKZEUGE -->
-    <div id="aw">
+    <!-- ARTIKEL (Werkzeug + Maschinen zusammen) -->
+    <div id="ti">
       <div class="admin-section">
-        <div class="admin-section-title">Werkzeug / Maschine hinzufügen</div>
+        <div class="admin-section-title">Artikel hinzufügen</div>
         <div class="add-form">
           <div class="form-row">
-            <div class="fg"><label>Art</label>
+            <div class="fg"><label>Name / Bezeichnung</label><input type="text" id="addName" placeholder="z.B. Schlagbohrmaschine"></div>
+            <div class="fg"><label>Marke</label><input type="text" id="addMarke" placeholder="z.B. Bosch, Hilti, Viessmann"></div>
+          </div>
+          <div class="form-row">
+            <div class="fg">
+              <label>Art</label>
               <select id="addArt">
                 <option value="Werkzeug">Werkzeug</option>
                 <option value="Maschine">Maschine</option>
                 <option value="Messgerät">Messgerät</option>
                 <option value="Elektrowerkzeug">Elektrowerkzeug</option>
+                <option value="Handwerkzeug">Handwerkzeug</option>
                 <option value="Heizung">Heizung</option>
+                <option value="Pumpe">Pumpe</option>
                 <option value="Sonstiges">Sonstiges</option>
               </select>
             </div>
-            <div class="fg"><label>Marke</label><input type="text" id="addMarke" placeholder="z.B. Bosch, Hilti, Viessmann"></div>
-          </div>
-          <div class="form-row">
-            <div class="fg"><label>Name / Modell</label><input type="text" id="addName" placeholder="z.B. Schlagbohrmaschine GSB 21-2"></div>
             <div class="fg"><label>Seriennummer</label><input type="text" id="addSerial" placeholder="z.B. SN-2024-001"></div>
           </div>
           <div class="form-row">
-            <div class="fg"><label>Zugeordnetes Auto</label>
+            <div class="fg">
+              <label>Symbol auswählen</label>
+              <div class="selected-emoji-preview" id="emojiPreview">🔧</div>
+              <div class="emoji-grid" id="emojiGrid"></div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="fg">
+              <label>Zugeordnetes Auto (optional)</label>
               <select id="addAuto"><option value="">– kein Auto –</option></select>
             </div>
-            <div class="fg"><label>Status</label>
+            <div class="fg">
+              <label>Anfangsstatus</label>
               <select id="addStatus">
                 <option value="frei">Frei</option>
                 <option value="auto">Im Auto</option>
@@ -245,26 +266,17 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--s
               </select>
             </div>
           </div>
-          <div class="fg"><label>Symbol wählen</label>
-            <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
-              <div class="emoji-selected-display" id="emojiDisplay" onclick="toggleEmojiPicker()">🔧</div>
-              <span style="font-size:12px;color:var(--muted)">Tippe auf das Symbol um es zu ändern</span>
-            </div>
-            <div id="emojiPicker" style="display:none">
-              <div class="emoji-grid" id="emojiGrid"></div>
-            </div>
-          </div>
-          <button class="btn-add" onclick="wzHinzu()">+ Hinzufügen</button>
+          <button class="btn-add" onclick="artikelHinzu()">+ Artikel hinzufügen</button>
         </div>
       </div>
       <div class="admin-section">
-        <div class="admin-section-title">Alle Einträge (<span id="adminWzCount">0</span>)</div>
-        <div id="adminWzListe"></div>
+        <div class="admin-section-title">Alle Artikel (<span id="adminArtikelCount">0</span>)</div>
+        <div id="adminArtikelListe"></div>
       </div>
     </div>
  
     <!-- AUTOS -->
-    <div id="aa" style="display:none">
+    <div id="ta" style="display:none">
       <div class="admin-section">
         <div class="admin-section-title">Auto hinzufügen</div>
         <div class="add-form">
@@ -272,7 +284,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--s
             <div class="fg"><label>KFZ-Kennzeichen</label><input type="text" id="addAutoKfz" placeholder="z.B. IZ-HH 123" style="text-transform:uppercase"></div>
             <div class="fg"><label>Beschreibung</label><input type="text" id="addAutoDesc" placeholder="z.B. Weißer Sprinter"></div>
           </div>
-          <button class="btn-add" onclick="autoHinzu()">+ Hinzufügen</button>
+          <button class="btn-add" onclick="autoHinzu()">+ Auto hinzufügen</button>
         </div>
       </div>
       <div class="admin-section">
@@ -282,9 +294,9 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--s
     </div>
  
     <!-- ÜBERSICHT -->
-    <div id="ao" style="display:none">
+    <div id="to" style="display:none">
       <div class="admin-section">
-        <div class="admin-section-title">Übersicht nach Fahrzeug</div>
+        <div class="admin-section-title">Gesamtübersicht</div>
         <div id="adminUebersicht"></div>
       </div>
     </div>
@@ -309,239 +321,215 @@ const app = initializeApp(firebaseConfig);
 const db  = getFirestore(app);
 const ADMIN_PW = "Heesch2000!";
  
-const EMOJIS = ['🔧','🪛','⚡','🔩','🪚','🔨','🪝','🔑','🪤','🧰','📐','📏','🪜','💡','🔌','🪣','🌡️','⚙️','🔬','🛠️','🪠','🚿','🛁','🚰','♨️','🔥','❄️','💨','🏗️','📦'];
-const STATUS_LABEL = {auto:'Im Auto',frei:'Frei',wartung:'Zur Wartung',defekt:'Defekt'};
-const STATUS_BADGE = {auto:'badge-auto',frei:'badge-frei',wartung:'badge-wartung',defekt:'badge-defekt'};
+const EMOJIS = ['🔧','⚙️','🔨','🪛','🔩','🪚','🔌','🔋','📏','🪜','🧰','🪤','⚡','🌡️','💧','🔥','❄️','🏗️','🚿','🛁','🪠','🔑','🪝','🔦','🧲','📦','🚐','🛠️','⛏️','🪣'];
  
-let werkzeuge=[], autos=[], currentUser=null, activeFilter='alle', selectedEmoji='🔧', selectedAutoReiter='alle';
+const STATUS_LABELS = { auto:'Im Auto', frei:'Frei', wartung:'Zur Wartung', defekt:'Defekt' };
+const STATUS_BADGE  = { auto:'badge-auto', frei:'badge-frei', wartung:'badge-wartung', defekt:'badge-defekt' };
  
-function sync(id){const d=document.getElementById(id);if(d)d.className='sync-dot live';}
+let artikel = [], autos = [], currentUser = null, activeFilter = 'alle', selectedEmoji = '🔧';
  
-// EMOJI PICKER
-const grid=document.getElementById('emojiGrid');
-EMOJIS.forEach(e=>{
-  const btn=document.createElement('button');
-  btn.className='emoji-btn'; btn.textContent=e;
-  btn.onclick=()=>{
-    selectedEmoji=e;
-    document.getElementById('emojiDisplay').textContent=e;
-    document.getElementById('emojiPicker').style.display='none';
-    document.querySelectorAll('.emoji-btn').forEach(b=>b.classList.remove('selected'));
-    btn.classList.add('selected');
-  };
-  grid.appendChild(btn);
-});
-window.toggleEmojiPicker=()=>{
-  const p=document.getElementById('emojiPicker');
-  p.style.display=p.style.display==='none'?'block':'none';
-};
+// EMOJI GRID
+function buildEmojiGrid(){
+  const grid = document.getElementById('emojiGrid');
+  if(!grid) return;
+  grid.innerHTML = EMOJIS.map(e=>`<div class="emoji-opt ${e===selectedEmoji?'selected':''}" onclick="selectEmoji('${e}')">${e}</div>`).join('');
+}
+window.selectEmoji = (e)=>{ selectedEmoji=e; document.getElementById('emojiPreview').textContent=e; buildEmojiGrid(); };
+buildEmojiGrid();
+ 
+function sync(id){ const d=document.getElementById(id); if(d)d.className='sync-dot live'; }
  
 // LISTENERS
-onSnapshot(collection(db,'werkzeuge2'), snap=>{
-  werkzeuge=snap.docs.map(d=>({id:d.id,...d.data()}))
-    .sort((a,b)=>(a.art+a.marke+a.name).localeCompare(b.art+b.marke+b.name));
+onSnapshot(collection(db,'artikel'), snap=>{
+  artikel = snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>a.name.localeCompare(b.name));
   sync('syncDot'); sync('syncDotAdmin');
-  renderAlle(); renderUebersicht(); renderAdminWz(); renderAdminUebersicht();
+  renderMain(); renderKfz(); renderAdminArtikel(); renderAdminUebersicht();
 });
+ 
 onSnapshot(collection(db,'autos'), snap=>{
-  autos=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>a.kfz.localeCompare(b.kfz));
-  renderUebersicht(); renderAdminAutos(); updateAutoSelects(); renderAdminUebersicht();
+  autos = snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>a.kfz.localeCompare(b.kfz));
+  renderAdminAutos(); updateAutoSelects();
 });
  
 // LOGIN
-window.showAdmin=()=>{document.getElementById('monteurForm').style.display='none';document.getElementById('adminForm').style.display='block';err('');};
-window.showMonteur=()=>{document.getElementById('adminForm').style.display='none';document.getElementById('monteurForm').style.display='block';err('');};
-function err(m){const e=document.getElementById('loginErr');e.textContent=m;e.style.display=m?'block':'none';}
-window.monteurLogin=()=>{
+window.showAdmin   = ()=>{ document.getElementById('monteurForm').style.display='none'; document.getElementById('adminForm').style.display='block'; loginErr(''); };
+window.showMonteur = ()=>{ document.getElementById('adminForm').style.display='none'; document.getElementById('monteurForm').style.display='block'; loginErr(''); };
+function loginErr(msg){ const e=document.getElementById('loginErr'); e.textContent=msg; e.style.display=msg?'block':'none'; }
+ 
+window.monteurLogin = ()=>{
   const name=document.getElementById('inputName').value.trim();
   const kfz=document.getElementById('inputKfz').value.trim().toUpperCase();
-  if(!name){err('Bitte Namen eingeben.');return;}
-  if(!kfz){err('Bitte KFZ-Kennzeichen eingeben.');return;}
+  if(!name){loginErr('Bitte Namen eingeben.');return;}
+  if(!kfz){loginErr('Bitte KFZ-Kennzeichen eingeben.');return;}
   currentUser={name,kfz};
   document.getElementById('userTag').textContent=name+' · '+kfz;
   showScreen('mainScreen');
 };
-window.adminLogin=()=>{
-  if(document.getElementById('inputPw').value!==ADMIN_PW){err('Falsches Passwort.');return;}
+window.adminLogin = ()=>{
+  if(document.getElementById('inputPw').value!==ADMIN_PW){loginErr('Falsches Passwort.');return;}
   showScreen('adminScreen');
 };
-window.abmelden=()=>{currentUser=null;showScreen('loginScreen');document.getElementById('inputName').value='';document.getElementById('inputKfz').value='';};
-window.adminAbmelden=()=>{document.getElementById('inputPw').value='';showScreen('loginScreen');};
-function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
+window.abmelden = ()=>{ currentUser=null; showScreen('loginScreen'); document.getElementById('inputName').value=''; document.getElementById('inputKfz').value=''; };
+window.adminAbmelden = ()=>{ document.getElementById('inputPw').value=''; showScreen('loginScreen'); };
  
-// MAIN TABS
-window.mainTab=(btn,tab)=>{
-  document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
-  document.getElementById('tAlle').style.display=tab==='tAlle'?'flex':'none';
-  document.getElementById('tUebersicht').style.display=tab==='tUebersicht'?'flex':'none';
-  if(tab==='tUebersicht')renderUebersicht();
-};
+function showScreen(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
  
 // FILTER
-window.setFilter=(btn)=>{
-  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
-  activeFilter=btn.dataset.f; renderAlle();
+window.setFilter = (btn)=>{
+  document.querySelectorAll('.f-tab').forEach(b=>b.classList.remove('active')); btn.classList.add('active');
+  activeFilter=btn.dataset.f; renderMain();
 };
  
-// RENDER ALLE
-window.renderAlle=()=>{
-  const liste=document.getElementById('wzListe');
-  const search=(document.getElementById('searchWz')?.value||'').toLowerCase();
-  let filtered=werkzeuge.filter(w=>{
-    const matchS=!search||(w.name||'').toLowerCase().includes(search)||(w.marke||'').toLowerCase().includes(search)||(w.art||'').toLowerCase().includes(search)||(w.serial||'').toLowerCase().includes(search);
-    const matchF=activeFilter==='alle'||(w.status||'frei')===activeFilter;
-    return matchS&&matchF;
+// RENDER MAIN (linkes Panel)
+window.renderMain = ()=>{
+  const panel=document.getElementById('mainPanel');
+  const search=(document.getElementById('searchMain')?.value||'').toLowerCase();
+ 
+  let filtered=artikel.filter(a=>{
+    const matchSearch=!search||a.name.toLowerCase().includes(search)||(a.marke||'').toLowerCase().includes(search)||(a.serial||'').toLowerCase().includes(search)||(a.art||'').toLowerCase().includes(search);
+    const status=a.status||'frei';
+    const matchFilter=activeFilter==='alle'||status===activeFilter;
+    return matchSearch&&matchFilter;
   });
-  if(!filtered.length){liste.innerHTML=`<div class="empty-state"><div class="ei">🔍</div>Keine Einträge gefunden</div>`;return;}
  
-  // Gruppe nach Art
+  document.getElementById('cAlle').textContent=artikel.length;
+  document.getElementById('panelCount').textContent=filtered.length;
+ 
+  if(!filtered.length){ panel.innerHTML=`<div class="empty-panel"><div class="ei">🔍</div>Keine Artikel gefunden</div>`; return; }
+ 
+  // Gruppieren nach Art
   const gruppen={};
-  filtered.forEach(w=>{const k=w.art||'Sonstiges';if(!gruppen[k])gruppen[k]=[];gruppen[k].push(w);});
+  filtered.forEach(a=>{ if(!gruppen[a.art])gruppen[a.art]=[]; gruppen[a.art].push(a); });
  
-  liste.innerHTML=Object.entries(gruppen).map(([art,items])=>`
-    <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-family:var(--mono);padding:8px 4px 4px;">${art}</div>
-    ${items.map(w=>{
-      const status=w.status||'frei';
-      const autoTxt=w.autoKfz?`<span style="color:var(--text)">${w.autoKfz}</span>`:''
-      return `<div class="wz-card">
-        <div class="wz-icon">${w.emoji||'🔧'}</div>
-        <div class="wz-info">
-          <div class="wz-name">${w.marke?'<span style="color:var(--muted);font-weight:400">'+w.marke+'</span> ':''}${w.name}</div>
-          <div class="wz-meta">${w.serial?'SN: '+w.serial:''}</div>
-          ${w.autoKfz?`<div class="wz-auto">🚐 ${autoTxt}</div>`:''}
+  panel.innerHTML=Object.entries(gruppen).map(([art,items])=>`
+    <div class="kat-label">${art}</div>
+    ${items.map(a=>{
+      const status=a.status||'frei';
+      const kannMitnehmen=currentUser&&status==='frei';
+      const istMeins=currentUser&&a.autoKfz===currentUser.kfz;
+      return `<div class="item-card ${kannMitnehmen?'clickable':''}" ${kannMitnehmen?`onclick="mitnehmen('${a.id}','${a.name}')"`:''}> 
+        <div class="item-icon">${a.emoji||'🔧'}</div>
+        <div class="item-info">
+          <div class="item-name">${a.name}</div>
+          <div class="item-meta">${a.marke?a.marke+' · ':''}${a.serial?'SN: '+a.serial:''}</div>
+          ${a.autoKfz?`<div class="item-meta" style="margin-top:2px">🚐 ${a.autoKfz}</div>`:''}
         </div>
-        <span class="badge ${STATUS_BADGE[status]}">${STATUS_LABEL[status]}</span>
+        <span class="badge ${STATUS_BADGE[status]}">${STATUS_LABELS[status]}</span>
+        ${kannMitnehmen?`<button class="item-action" onclick="event.stopPropagation();mitnehmen('${a.id}','${a.name}')">→</button>`:''}
+        ${istMeins&&status==='auto'?`<button class="item-action gruen" onclick="event.stopPropagation();zurueckLegen('${a.id}','${a.name}')">←</button>`:''}
       </div>`;
     }).join('')}
   `).join('');
 };
  
-// RENDER ÜBERSICHT (Fahrzeuge)
-window.renderUebersicht=()=>{
-  const body=document.getElementById('uebersichtBody'); if(!body)return;
+// RENDER KFZ (rechtes Panel)
+window.renderKfz = ()=>{
+  const panel=document.getElementById('kfzPanel');
+  const imAuto=artikel.filter(a=>a.status==='auto'&&a.autoKfz);
+  document.getElementById('kfzCount').textContent=imAuto.length;
  
-  // Reiter bauen
-  const reiterHtml=`
-    <div class="auto-reiter-wrap">
-      <button class="auto-reiter ${selectedAutoReiter==='alle'?'active':''}" onclick="setAutoReiter('alle',this)">Alle</button>
-      ${autos.map(a=>`<button class="auto-reiter ${selectedAutoReiter===a.id?'active':''}" onclick="setAutoReiter('${a.id}',this)">${a.kfz}</button>`).join('')}
-      <button class="auto-reiter ${selectedAutoReiter==='kein'?'active':''}" onclick="setAutoReiter('kein',this)">Kein Auto</button>
-    </div>`;
+  if(!imAuto.length){ panel.innerHTML=`<div class="empty-panel"><div class="ei">🚐</div>Kein Artikel im Fahrzeug</div>`; return; }
  
-  let anzeigeAutos=autos;
-  let showKeinAuto=false;
-  if(selectedAutoReiter==='kein'){ anzeigeAutos=[]; showKeinAuto=true; }
-  else if(selectedAutoReiter!=='alle'){ anzeigeAutos=autos.filter(a=>a.id===selectedAutoReiter); }
+  // Gruppieren nach KFZ
+  const kfzMap={};
+  imAuto.forEach(a=>{ if(!kfzMap[a.autoKfz])kfzMap[a.autoKfz]=[]; kfzMap[a.autoKfz].push(a); });
  
-  let cardsHtml='';
- 
-  if(selectedAutoReiter==='alle'||selectedAutoReiter==='kein'){
-    const ohneAuto=werkzeuge.filter(w=>!w.autoKfz);
-    if(ohneAuto.length||showKeinAuto){
-      cardsHtml+=autoCard('Kein Fahrzeug','–','',ohneAuto);
-    }
-  }
- 
-  anzeigeAutos.forEach(a=>{
-    const wzList=werkzeuge.filter(w=>w.autoKfz===a.kfz);
-    cardsHtml+=autoCard(a.kfz,a.desc||'',a.id,wzList);
+  // Eigenes KFZ zuerst
+  const sorted=Object.entries(kfzMap).sort(([a],[b])=>{
+    if(currentUser&&a===currentUser.kfz)return -1;
+    if(currentUser&&b===currentUser.kfz)return 1;
+    return a.localeCompare(b);
   });
  
-  if(!cardsHtml) cardsHtml=`<div class="empty-state"><div class="ei">🚐</div>Noch keine Fahrzeuge angelegt</div>`;
- 
-  body.innerHTML=reiterHtml+cardsHtml;
-};
- 
-function autoCard(plate,desc,id,items){
-  const stats={auto:0,frei:0,wartung:0,defekt:0};
-  items.forEach(w=>stats[w.status||'frei']++);
-  const statsHtml=Object.entries(stats).filter(([,v])=>v>0).map(([s,v])=>`<span class="badge ${STATUS_BADGE[s]}" style="margin-right:4px">${v} ${STATUS_LABEL[s]}</span>`).join('');
-  return `<div class="auto-card" style="margin-bottom:16px">
-    <div class="auto-card-header">
-      <span class="auto-plate">${plate}</span>
-      <span class="auto-desc">${desc}</span>
-      <span class="auto-count">${items.length} Einträge</span>
-    </div>
-    ${statsHtml?`<div style="padding:8px 16px;border-bottom:1px solid var(--border);display:flex;flex-wrap:wrap;gap:4px;">${statsHtml}</div>`:''}
-    ${items.length?items.map(w=>{
-      const status=w.status||'frei';
-      return `<div class="auto-wz-item">
-        <div class="auto-wz-icon">${w.emoji||'🔧'}</div>
-        <div class="auto-wz-info">
-          <div class="auto-wz-name">${w.marke?`<span style="color:var(--muted);font-weight:400">${w.marke}</span> `:''}${w.name}</div>
-          <div class="auto-wz-meta">${w.art||''}${w.serial?' · SN: '+w.serial:''}</div>
+  panel.innerHTML=sorted.map(([kfz,items])=>{
+    const istMeins=currentUser&&kfz===currentUser.kfz;
+    const autoInfo=autos.find(a=>a.kfz===kfz);
+    return `<div class="kfz-section">
+      <div class="kfz-header">
+        <span class="kfz-plate">${kfz}</span>
+        <span class="kfz-monteur">${autoInfo?.desc||''}${istMeins?' <span style="font-size:10px;color:var(--green2)">(Mein Auto)</span>':''}</span>
+        <span style="font-size:11px;color:var(--muted);font-family:var(--mono)">${items.length} Stk</span>
+      </div>
+      ${items.map(a=>`<div class="kfz-item w-item">
+        <span style="font-size:16px">${a.emoji||'🔧'}</span>
+        <div style="flex:1;min-width:0">
+          <div class="kfz-item-name">${a.name}</div>
+          <div class="kfz-item-meta">${a.marke||''}${a.serial?' · SN:'+a.serial:''}</div>
         </div>
-        <span class="badge ${STATUS_BADGE[status]}">${STATUS_LABEL[status]}</span>
-      </div>`;
-    }).join(''):`<div class="auto-empty">Keine Einträge</div>`}
-  </div>`;
-}
- 
-window.setAutoReiter=(val,btn)=>{
-  selectedAutoReiter=val;
-  document.querySelectorAll('.auto-reiter').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  renderUebersicht();
+        ${istMeins?`<button class="btn-zurueck" onclick="zurueckLegen('${a.id}','${a.name}')">← Zurück</button>`:''}
+      </div>`).join('')}
+    </div>`;
+  }).join('');
 };
  
-// ADMIN WERKZEUG
-window.wzHinzu=async()=>{
-  const art=document.getElementById('addArt').value;
-  const marke=document.getElementById('addMarke').value.trim();
+// AKTIONEN
+window.mitnehmen = async (id, name)=>{
+  if(!currentUser)return;
+  if(!confirm('"'+name+'" mitnehmen?\nWird Fahrzeug '+currentUser.kfz+' zugeordnet.'))return;
+  await updateDoc(doc(db,'artikel',id),{status:'auto',autoKfz:currentUser.kfz});
+};
+window.zurueckLegen = async (id, name)=>{
+  if(!confirm('"'+name+'" zurück? Status wird auf Frei gesetzt.'))return;
+  await updateDoc(doc(db,'artikel',id),{status:'frei'});
+};
+ 
+// ADMIN ARTIKEL
+window.artikelHinzu = async ()=>{
   const name=document.getElementById('addName').value.trim();
+  const marke=document.getElementById('addMarke').value.trim();
+  const art=document.getElementById('addArt').value;
   const serial=document.getElementById('addSerial').value.trim();
   const autoKfz=document.getElementById('addAuto').value;
   const status=document.getElementById('addStatus').value;
-  if(!name){alert('Name ist Pflichtfeld.');return;}
-  await addDoc(collection(db,'werkzeuge2'),{art,marke,name,serial,autoKfz,status,emoji:selectedEmoji});
-  document.getElementById('addMarke').value='';
+  if(!name){alert('Bitte einen Namen eingeben.');return;}
+  await addDoc(collection(db,'artikel'),{name,marke:marke||'',art,serial:serial||'',emoji:selectedEmoji,autoKfz:autoKfz||'',status});
   document.getElementById('addName').value='';
+  document.getElementById('addMarke').value='';
   document.getElementById('addSerial').value='';
-  document.getElementById('addAuto').value='';
-  document.getElementById('addStatus').value='frei';
   selectedEmoji='🔧';
-  document.getElementById('emojiDisplay').textContent='🔧';
+  buildEmojiGrid();
+  document.getElementById('emojiPreview').textContent='🔧';
 };
  
-window.wzLoeschen=async(id,btn)=>{
-  const name=btn?btn.closest('.admin-item').querySelector('.item-name').textContent:'?';
+window.artikelStatusAendern = async (id, val)=>{ await updateDoc(doc(db,'artikel',id),{status:val}); };
+window.artikelAutoAendern   = async (id, val)=>{ await updateDoc(doc(db,'artikel',id),{autoKfz:val}); };
+ 
+window.artikelLoeschen = async (id, btn)=>{
+  const name=btn?btn.closest('.admin-item').querySelector('.admin-item-name').textContent:'?';
   if(!confirm('"'+name+'" wirklich löschen?'))return;
-  await deleteDoc(doc(db,'werkzeuge2',id));
+  await deleteDoc(doc(db,'artikel',id));
 };
  
-window.wzStatusChange=async(id,val)=>{ await updateDoc(doc(db,'werkzeuge2',id),{status:val}); };
-window.wzAutoChange=async(id,val)=>{ await updateDoc(doc(db,'werkzeuge2',id),{autoKfz:val}); };
- 
-window.renderAdminWz=()=>{
-  const liste=document.getElementById('adminWzListe');if(!liste)return;
-  document.getElementById('adminWzCount').textContent=werkzeuge.length;
-  if(!werkzeuge.length){liste.innerHTML='<div style="color:var(--muted);font-size:13px">Noch keine Einträge.</div>';return;}
-  liste.innerHTML=werkzeuge.map(w=>{
-    const status=w.status||'frei';
-    const autoOpts=autos.map(a=>`<option value="${a.kfz}" ${w.autoKfz===a.kfz?'selected':''}>${a.kfz}</option>`).join('');
+window.renderAdminArtikel = ()=>{
+  const liste=document.getElementById('adminArtikelListe'); if(!liste)return;
+  document.getElementById('adminArtikelCount').textContent=artikel.length;
+  if(!artikel.length){liste.innerHTML='<div style="color:var(--muted);font-size:13px">Noch keine Artikel.</div>';return;}
+  liste.innerHTML=artikel.map(a=>{
+    const status=a.status||'frei';
+    const autoOptions=autos.map(au=>`<option value="${au.kfz}" ${a.autoKfz===au.kfz?'selected':''}>${au.kfz}${au.desc?' – '+au.desc:''}</option>`).join('');
     return `<div class="admin-item">
-      <span style="font-size:20px">${w.emoji||'🔧'}</span>
-      <div class="item-info">
-        <div class="item-name">${w.marke?w.marke+' ':''}${w.name}</div>
-        <div class="item-meta">${w.art||''}${w.serial?' · SN: '+w.serial:''}</div>
+      <span style="font-size:22px">${a.emoji||'🔧'}</span>
+      <div class="admin-item-info">
+        <div class="admin-item-name">${a.name}</div>
+        <div class="admin-item-meta">${a.art}${a.marke?' · '+a.marke:''}${a.serial?' · SN: '+a.serial:''}</div>
       </div>
-      <select class="status-sel" onchange="wzStatusChange('${w.id}',this.value)">
-        <option value="auto" ${status==='auto'?'selected':''}>Im Auto</option>
+      <select class="status-select" onchange="artikelStatusAendern('${a.id}',this.value)">
         <option value="frei" ${status==='frei'?'selected':''}>Frei</option>
-        <option value="wartung" ${status==='wartung'?'selected':''}>Wartung</option>
+        <option value="auto" ${status==='auto'?'selected':''}>Im Auto</option>
+        <option value="wartung" ${status==='wartung'?'selected':''}>Zur Wartung</option>
         <option value="defekt" ${status==='defekt'?'selected':''}>Defekt</option>
       </select>
-      <select class="status-sel" onchange="wzAutoChange('${w.id}',this.value)" style="min-width:100px">
-        <option value="" ${!w.autoKfz?'selected':''}>– kein –</option>
-        ${autoOpts}
+      <select class="status-select" onchange="artikelAutoAendern('${a.id}',this.value)" style="min-width:110px">
+        <option value="">– kein Auto –</option>
+        ${autoOptions}
       </select>
-      <button class="btn-del" onclick="wzLoeschen('${w.id}',this)">Löschen</button>
+      <button class="btn-del" onclick="artikelLoeschen('${a.id}',this)">Löschen</button>
     </div>`;
   }).join('');
 };
  
 // ADMIN AUTOS
-window.autoHinzu=async()=>{
+window.autoHinzu = async ()=>{
   const kfz=document.getElementById('addAutoKfz').value.trim().toUpperCase();
   const desc=document.getElementById('addAutoDesc').value.trim();
   if(!kfz){alert('KFZ-Kennzeichen ist Pflichtfeld.');return;}
@@ -549,51 +537,69 @@ window.autoHinzu=async()=>{
   document.getElementById('addAutoKfz').value='';
   document.getElementById('addAutoDesc').value='';
 };
-window.autoLoeschen=async(id,btn)=>{
-  const kfz=btn?btn.closest('.admin-item').querySelector('.item-name').textContent:'?';
+window.autoLoeschen = async (id, btn)=>{
+  const kfz=btn?btn.closest('.admin-item').querySelector('.admin-item-name').textContent:'?';
   if(!confirm('Auto "'+kfz+'" wirklich löschen?'))return;
   await deleteDoc(doc(db,'autos',id));
 };
-window.renderAdminAutos=()=>{
-  const liste=document.getElementById('adminAutoListe');if(!liste)return;
+window.renderAdminAutos = ()=>{
+  const liste=document.getElementById('adminAutoListe'); if(!liste)return;
   document.getElementById('adminAutoCount').textContent=autos.length;
   if(!autos.length){liste.innerHTML='<div style="color:var(--muted);font-size:13px">Noch keine Autos.</div>';return;}
   liste.innerHTML=autos.map(a=>`<div class="admin-item">
-    <span style="font-size:20px">🚐</span>
-    <div class="item-info"><div class="item-name">${a.kfz}</div><div class="item-meta">${a.desc||'–'}</div></div>
+    <span style="font-size:22px">🚐</span>
+    <div class="admin-item-info">
+      <div class="admin-item-name">${a.kfz}</div>
+      <div class="admin-item-meta">${a.desc||'–'}</div>
+    </div>
     <button class="btn-del" onclick="autoLoeschen('${a.id}',this)">Löschen</button>
   </div>`).join('');
 };
  
 function updateAutoSelects(){
   const opts='<option value="">– kein Auto –</option>'+autos.map(a=>`<option value="${a.kfz}">${a.kfz}${a.desc?' – '+a.desc:''}</option>`).join('');
-  ['addAuto'].forEach(id=>{const s=document.getElementById(id);if(s)s.innerHTML=opts;});
+  ['addAuto'].forEach(id=>{ const s=document.getElementById(id); if(s)s.innerHTML=opts; });
 }
  
 // ADMIN ÜBERSICHT
-window.renderAdminUebersicht=()=>{
-  const div=document.getElementById('adminUebersicht');if(!div)return;
-  let html='';
-  const ohneAuto=werkzeuge.filter(w=>!w.autoKfz);
-  if(ohneAuto.length){
-    html+=`<div style="margin-bottom:16px"><div style="font-size:12px;font-weight:700;color:var(--muted);font-family:var(--mono);margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border)">OHNE FAHRZEUG (${ohneAuto.length})</div>`;
-    html+=ohneAuto.map(w=>`<div style="font-size:13px;padding:4px 0;display:flex;align-items:center;gap:8px">${w.emoji||'🔧'} ${w.marke?w.marke+' ':''}${w.name} <span class="badge ${STATUS_BADGE[w.status||'frei']}">${STATUS_LABEL[w.status||'frei']}</span></div>`).join('');
-    html+='</div>';
-  }
-  autos.forEach(a=>{
-    const wz=werkzeuge.filter(w=>w.autoKfz===a.kfz);
-    html+=`<div style="margin-bottom:16px"><div style="font-size:12px;font-weight:700;color:var(--muted);font-family:var(--mono);margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border)">${a.kfz}${a.desc?' – '+a.desc:''} (${wz.length})</div>`;
-    if(wz.length) html+=wz.map(w=>`<div style="font-size:13px;padding:4px 0;display:flex;align-items:center;gap:8px">${w.emoji||'🔧'} ${w.marke?w.marke+' ':''}${w.name} <span class="badge ${STATUS_BADGE[w.status||'frei']}">${STATUS_LABEL[w.status||'frei']}</span></div>`).join('');
-    else html+=`<div style="font-size:12px;color:var(--muted)">Keine Einträge</div>`;
-    html+='</div>';
+window.renderAdminUebersicht = ()=>{
+  const div=document.getElementById('adminUebersicht'); if(!div)return;
+  const stats={ frei:0, auto:0, wartung:0, defekt:0 };
+  artikel.forEach(a=>{ const s=a.status||'frei'; if(stats[s]!==undefined)stats[s]++; });
+ 
+  const kfzMap={};
+  artikel.filter(a=>a.status==='auto'&&a.autoKfz).forEach(a=>{
+    if(!kfzMap[a.autoKfz])kfzMap[a.autoKfz]=[];
+    kfzMap[a.autoKfz].push(a);
   });
-  div.innerHTML=html||'<div style="color:var(--muted);font-size:13px">Noch keine Daten.</div>';
+ 
+  let html=`<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px">
+    ${Object.entries(stats).map(([s,n])=>`<div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center">
+      <div style="font-size:24px;font-weight:700;color:var(--text)">${n}</div>
+      <div style="font-size:11px;font-family:var(--mono);color:var(--muted);margin-top:4px">${STATUS_LABELS[s]}</div>
+    </div>`).join('')}
+  </div>`;
+ 
+  if(Object.keys(kfzMap).length){
+    html+=`<div class="admin-section-title" style="margin-top:20px">Verteilung nach Fahrzeug</div>`;
+    html+=Object.entries(kfzMap).map(([kfz,items])=>`
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:8px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <span style="font-family:var(--mono);font-size:12px;background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:2px 8px">${kfz}</span>
+          <span style="font-size:11px;color:var(--muted);font-family:var(--mono)">${items.length} Artikel</span>
+        </div>
+        ${items.map(a=>`<div style="font-size:13px;padding:3px 0">${a.emoji||'🔧'} ${a.name} <span style="color:var(--muted);font-size:11px;font-family:var(--mono)">${a.marke?'· '+a.marke:''}</span></div>`).join('')}
+      </div>`).join('');
+  }
+  div.innerHTML=html;
 };
  
 // ADMIN TABS
-window.adminTab=(btn,tab)=>{
-  document.querySelectorAll('.admin-tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
-  ['aw','aa','ao'].forEach(t=>document.getElementById(t).style.display=t===tab?'block':'none');
+window.adminTab = (btn,tab)=>{
+  document.querySelectorAll('.admin-tab').forEach(b=>b.classList.remove('active')); btn.classList.add('active');
+  ['ti','ta','to'].forEach(t=>document.getElementById(t).style.display=t===tab?'block':'none');
+  if(tab==='to')renderAdminUebersicht();
+  if(tab==='ti'){buildEmojiGrid();}
 };
  
 // ENTER
