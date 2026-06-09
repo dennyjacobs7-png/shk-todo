@@ -474,26 +474,18 @@ window.renderKfz = () => {
 };
 
 // MITNEHMEN
-window.mitnehmen = (wzId) => {
+window.mitnehmen = async (wzId) => {
   if (!currentUser) return;
   const wz = werkzeuge.find(w => w.id === wzId);
   if (!wz) return;
-  showModal(
-    `"${wz.name}" mitnehmen?`,
-    `Das Werkzeug wird deinem Fahrzeug ${currentUser.kfz} zugeordnet.`,
-    async () => {
-      await setDoc(doc(db, 'auswahlen', wzId), { name: currentUser.name, kfz: currentUser.kfz, ts: new Date().toISOString() });
-    }
-  );
+  if (!confirm('"' + wz.name + '" mitnehmen? Wird Fahrzeug ' + currentUser.kfz + ' zugeordnet.')) return;
+  await setDoc(doc(db, 'auswahlen', wzId), { name: currentUser.name, kfz: currentUser.kfz, ts: new Date().toISOString() });
 };
 
 // ZURÜCK
-window.zurueckLegen = (wzId, wzName) => {
-  showModal(
-    `"${wzName}" zurücklegen?`,
-    `Das Werkzeug kommt zurück ins Lager.`,
-    async () => { await deleteDoc(doc(db, 'auswahlen', wzId)); }
-  );
+window.zurueckLegen = async (wzId, wzName) => {
+  if (!confirm('"' + wzName + '" zurück ins Lager legen?')) return;
+  await deleteDoc(doc(db, 'auswahlen', wzId));
 };
 
 // ADMIN
@@ -510,11 +502,10 @@ window.wzHinzu = async () => {
 };
 
 window.wzLoeschen = async (id, btn) => {
-  const name = btn ? btn.closest('.admin-wz-item').querySelector('.admin-wz-name').textContent : id;
-  showModal(`"${name}" löschen?`, 'Das Werkzeug wird dauerhaft entfernt.', async () => {
-    await deleteDoc(doc(db, 'werkzeuge', id));
-    await deleteDoc(doc(db, 'auswahlen', id)).catch(()=>{});
-  });
+  const name = btn ? btn.closest('.admin-wz-item').querySelector('.admin-wz-name').textContent : '?';
+  if (!confirm('Werkzeug "' + name + '" wirklich löschen?')) return;
+  await deleteDoc(doc(db, 'werkzeuge', id));
+  await deleteDoc(doc(db, 'auswahlen', id)).catch(()=>{});
 };
 
 window.renderAdminListe = () => {
