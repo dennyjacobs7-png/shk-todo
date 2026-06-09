@@ -509,14 +509,8 @@ window.wzHinzu = async () => {
   document.getElementById('addEmoji').value='';
 };
 
-window.wzLoeschenBtn = (btn) => {
-  const id   = btn.getAttribute('data-id');
-  const item = btn.closest('.admin-wz-item');
-  const name = item.querySelector('.admin-wz-name').textContent;
-  window.wzLoeschen(id, name);
-};
-
-window.wzLoeschen = async (id, name) => {
+window.wzLoeschen = async (id, btn) => {
+  const name = btn ? btn.closest('.admin-wz-item').querySelector('.admin-wz-name').textContent : id;
   showModal(`"${name}" löschen?`, 'Das Werkzeug wird dauerhaft entfernt.', async () => {
     await deleteDoc(doc(db, 'werkzeuge', id));
     await deleteDoc(doc(db, 'auswahlen', id)).catch(()=>{});
@@ -536,7 +530,7 @@ window.renderAdminListe = () => {
         <div class="admin-wz-meta">${w.kategorie}${w.serial?' · SN: '+w.serial:''}</div>
       </div>
       ${auswahlen[w.id]?`<span style="font-size:11px;color:#ff8080;font-family:var(--mono)">${auswahlen[w.id].kfz}</span>`:''}
-      <button class="btn-del" onclick="wzLoeschen('${w.id}','${w.name}')">Löschen</button>
+      <button class="btn-del" onclick="wzLoeschen('${w.id}', this)">Löschen</button>
     </div>
   `).join('');
 };
@@ -590,7 +584,11 @@ function showModal(title, text, action) {
   document.getElementById('modal').classList.add('open');
 }
 window.closeModal = () => { document.getElementById('modal').classList.remove('open'); modalAction = null; };
-document.getElementById('modalConfirm').onclick = async () => { closeModal(); if (modalAction) await modalAction(); };
+document.getElementById('modalConfirm').onclick = async () => {
+  const action = modalAction;
+  closeModal();
+  if (action) await action();
+};
 
 // ENTER
 document.getElementById('inputKfz').addEventListener('keydown', e => { if (e.key==='Enter') window.monteurLogin(); });
